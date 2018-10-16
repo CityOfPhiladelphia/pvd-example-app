@@ -13,7 +13,6 @@ const controllerMixin = philaVueDatafetch.controllerMixin;
 
 const clientConfig = config;
 
-// function init(clientConfig) {
 const baseConfigUrl = config.baseConfig;
 // get base config
 axios.get(baseConfigUrl).then(response => {
@@ -40,7 +39,3 @@ axios.get(baseConfigUrl).then(response => {
 }).catch(err => {
   console.error('Error loading base config:', err);
 });
-
-// }
-//
-// init(config);
