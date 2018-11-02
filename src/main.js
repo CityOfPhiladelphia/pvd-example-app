@@ -12,7 +12,6 @@ import philaVueDatafetch from '@cityofphiladelphia/phila-vue-datafetch';
 const controllerMixin = philaVueDatafetch.controllerMixin;
 
 const clientConfig = config;
-
 const baseConfigUrl = config.baseConfig;
 // get base config
 axios.get(baseConfigUrl).then(response => {

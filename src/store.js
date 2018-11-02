@@ -31,7 +31,7 @@ function createStore(config) {
     }
   }
 
-  let mergeStore = mergeDeep(mb, pvdStore.store);
+  let mergeStore = mergeDeep(pvdStore.store, mb);
   console.log('mergeStore:', mergeStore);
 
   // TODO standardize how payloads are passed around/handled
