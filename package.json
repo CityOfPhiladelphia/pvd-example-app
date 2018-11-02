@@ -10,7 +10,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server"
   },
   "dependencies": {
-    "@cityofphiladelphia/phila-vue-datafetch": "https://github.com/CityOfPhiladelphia/phila-vue-datafetch#eacf533eeb8d3eb1c04cba71cdcb4a957eab05d4",
+    "@cityofphiladelphia/phila-vue-datafetch": "0.0.12",
     "accounting": "^0.4.1",
     "axios": "^0.18.0",
     "moment": "^2.21.0"
