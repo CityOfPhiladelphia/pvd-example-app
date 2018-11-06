@@ -1,14 +1,12 @@
 const path = require('path');
-const webpack = require('webpack');
-
 const env = process.env.NODE_ENV;
 const isDevelopment = env === 'development';
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-module.exports = {
+export default {
   entry: {
-    app: './src/main.js',
+    app: ['./src/index.html', './src/main.js'],
   },
   resolve: {
     mainFields: ['module', 'main', 'browser'],
@@ -19,7 +17,7 @@ module.exports = {
     // host: process.env.WEBPACK_DEV_HOST,
     host: 'localhost',
     // port: process.env.WEBPACK_DEV_PORT
-    port: 8080
+    port: 8084
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -29,8 +27,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: 'babel-loader',
+        test: /\.js/,
+        exclude: /(node_modules|bower_components)/,
+        use: [
+          {
+            loader: 'babel-loader'
+          }
+        ]
+      },
+      {
+        test: /\.html/,
+        loader: 'file-loader?name=[name].[ext]',
       },
       {
         test: /\.css$/,
@@ -47,12 +54,15 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader'
       }
-    ],
+    ]
   },
   plugins: [
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new VueLoaderPlugin()
   ],
+  stats: {
+      colors: true
+  },
+  devtool: 'source-map',
   mode: env,
   optimization: {
     splitChunks: {
@@ -64,12 +74,6 @@ module.exports = {
           enforce: true,
           priority: 5,
         },
-        // mapboard: {
-        //   test: /mapboard/,
-        //   chunks: 'initial',
-        //   name: 'mapboard',
-        //   priority: 10,
-        // },
       },
     },
   },

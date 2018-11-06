@@ -1,54 +1,75 @@
 <template>
   <div id="app-root">
+    <header class="site-header app group">
+      <div class="row expanded">
+        <div class="columns">
+          <a href="//beta.phila.gov" class="logo">
+            <img src="https://standards.phila.gov/img/logo/city-of-philadelphia-yellow-white.png" alt="City of Philadelphia">
+          </a>
+          <div class="app-divide"></div>
+          <div class="page-title-container">
+            <a href="#/">
+              <h1 class="page-title">PVD Example App</h1>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
 
-    <div :class="'pvc-search-control-container ' + this.containerClass"
-         :style="this.containerStyle"
-    >
-      <form @submit.prevent="handleSearchFormSubmit"
-            autocomplete="off"
-            id="search-form"
-            class="pvc-search-control-form"
-      >
-        <input :class="'pvc-search-control-input ' + this.inputClass"
-               id="pvc-search-control-input"
-               :style="this.inputStyle"
-               :placeholder="this.$props.placeholder || 'Search for an address'"
-               :value="this.addressEntered"
-               tabindex="0"
-        />
-      </form>
-      <button :class="'pvc-search-control-button ' + this.buttonClass"
-              tabindex="-1"
-              @click="this.handleSearchFormSubmit"
-      >
-        <i class="fa fa-search fa-lg"></i>
-      </button>
-      <slot name="address-candidates-slot" />
-    </div>
+    <div id="components-root">
 
-    <div class="data-div"
-         v-if="this.geocodeStatus === 'success'"
-    >
-      <div class="data-label-div"><b>Geocode Data</b></div>
-      <div class="data-returned-div">
-        Address: {{ this.geocodeProperties.street_address }}
-      </div>
-      <div class="data-label-div"><b>OPA Data</b></div>
-      <div class="data-returned-div">
-        <div>OPA number: {{ this.$store.state.sources.opa.data.parcel_number }}</div>
-        <div>Owner: {{ this.$store.state.sources.opa.data.owner_1 }}</div>
-      </div>
-      <div class="data-label-div"><b>DOR Data</b></div>
-      <div class="data-returned-div">
-        <div>DOR number: {{ this.geocodeProperties.dor_parcel_id }}</div>
-      </div>
-      <div class="data-label-div"><b>DOR Documents</b></div>
-      <div v-for="doc in this.dorDocuments"
-           class="dor-doc"
+      <font-awesome-icon icon="info-circle" class="fa-2x" />
+
+      <div :class="'pvc-search-control-container ' + this.containerClass"
+           :style="this.containerStyle"
       >
-        <div>Grantees: {{ doc.attributes.GRANTEES }}</div>
-        <div>DocType: {{ doc.attributes.DOCUMENT_TYPE }}</div>
+        <form @submit.prevent="handleSearchFormSubmit"
+              autocomplete="off"
+              id="search-form"
+              class="pvc-search-control-form"
+        >
+          <input :class="'pvc-search-control-input ' + this.inputClass"
+                 id="pvc-search-control-input"
+                 :style="this.inputStyle"
+                 :placeholder="this.$props.placeholder || 'Search for an address'"
+                 :value="this.addressEntered"
+                 tabindex="0"
+          />
+        </form>
+        <button :class="'pvc-search-control-button ' + this.buttonClass"
+                tabindex="-1"
+                @click="this.handleSearchFormSubmit"
+        >
+          <i class="fa fa-search fa-lg"></i>
+        </button>
+        <slot name="address-candidates-slot" />
       </div>
+
+      <div class="data-div"
+           v-if="this.geocodeStatus === 'success'"
+      >
+        <div class="data-label-div"><b>Geocode Data</b></div>
+        <div class="data-returned-div">
+          Address: {{ this.geocodeProperties.street_address }}
+        </div>
+        <div class="data-label-div"><b>OPA Data</b></div>
+        <div class="data-returned-div">
+          <div>OPA number: {{ this.$store.state.sources.opa.data.parcel_number }}</div>
+          <div>Owner: {{ this.$store.state.sources.opa.data.owner_1 }}</div>
+        </div>
+        <div class="data-label-div"><b>DOR Data</b></div>
+        <div class="data-returned-div">
+          <div>DOR number: {{ this.geocodeProperties.dor_parcel_id }}</div>
+        </div>
+        <div class="data-label-div"><b>DOR Documents</b></div>
+        <div v-for="doc in this.dorDocuments"
+             class="dor-doc"
+        >
+          <div>Grantees: {{ doc.attributes.GRANTEES }}</div>
+          <div>DocType: {{ doc.attributes.DOCUMENT_TYPE }}</div>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -155,7 +176,7 @@
         if (this.addressAutocompleteEnabled){
           value = this.$store.state.addressEntered;
         } else {
-          value = $('#pvc-search-control-input').val();
+          value = document.querySelector('#pvc-search-control-input').value;
         }
         // console.log('phila-vue-comps AddressInput.vue, handleSearchFormSubmit is running, value:', value);
         this.$controller.handleSearchFormSubmit(value);
